@@ -1,0 +1,76 @@
+﻿1.
+u1 = User.objects.create_user(username='ИвановИИ')
+u2 = User.objects.create_user(username='ПетровАЕ')
+
+2.
+a1 = Author.objects.create(author_U = u1)
+a2 = Author.objects.create(author_U = u2)
+
+3.
+c1 = Category.objects.create(post_cat='IT')
+c2 = Category.objects.create(post_cat='Economy')
+c3 = Category.objects.create(post_cat='Politic')
+c4 = Category.objects.create(post_cat='Sport')
+
+4.
+news1 = Post.objects.create(author_post=a1, type='NW', head_post='firsteNews', text_post='allNEWStext')
+post1 = Post.objects.create(author_post=a1, type='PS', head_post='firstePOST', text_post='allPOSTtext')
+post2 = Post.objects.create(author_post=a2, type='PS', head_post='secondPOST', text_post='allsecondPOSTtext')
+
+5.
+--Post.Objects.get(Id=1).category_post.add(Category.objects.get(id=1))
+news1.category_post.add(c1)
+news1.category_post.add(c2)
+
+post1.category_post.add(c2)
+post1.category_post.add(c3)
+post1.category_post.add(c4)
+
+post2.category_post.add(c2)
+post2.category_post.add(c4)
+
+6.
+--Comment.objects.create(post_c=Post.objects.get(id=1), user_c=Author.objects.get(id=1).author_U, text_com='somecommenttext')
+news1comm1 = Comment.objects.create(post_c=news1, user_c=a2.author_U, text_com='someNEWS1commenttext')
+news1comm2 = Comment.objects.create(post_c=news1, user_c=a2.author_U, text_com='someNEWS1commenttext2')
+post1comm1 = Comment.objects.create(post_c=post1, user_c=a1.author_U, text_com='somePOST1commenttext')
+post2comm1 = Comment.objects.create(post_c=post2, user_c=a1.author_U, text_com='somePOST2commenttext')
+
+7.
+--Comment.objects.get(id=1).like()
+news1.like()
+news1.like()
+post1.like()
+post2.dislike()
+
+news1comm1.like()
+news1comm2.dislike()
+post1comm1.like()
+post2comm1.like()  
+
+8.
+--Author.objects.update_rating()
+a1.update_rating()
+a2.update_rating()
+
+9.
+r = Author.objects.order_by('-rating_A')
+
+r[0].author_U.username
+r[0].rating_A
+
+10.
+p = Post.objects.order_by('-rating_post')
+p[0].date_create
+p[0].author_post.author_U.username
+p[0].rating_post
+p[0].head_post
+p[0].preview()
+
+11.
+commpost = Comment.objects.filter(post_c=p[0])
+for al in commpost:
+...     al.datein_com
+...     al.user_c
+...     al.rating_com
+...     al.text_com
